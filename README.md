@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="wwwroot/AspGoatLogo.png" alt="AspGoat Logo" width="300"/>
+  <img src="wwwroot/AspGoatLogo-Github.png" alt="AspGoat Logo" height="500" width="1000"/>
 </p>
 
 <h1 align="center">🐐 AspGoat</h1>
@@ -59,7 +59,7 @@ It includes the **OWASP Top 10** and beyond, providing hands-on Application Secu
 
 ---
 
-## 🚀 Quickstart
+## 🪛 Installation
 
 ### Using Docker (recommended)
 
@@ -80,6 +80,9 @@ It includes the **OWASP Top 10** and beyond, providing hands-on Application Secu
 ### Access the app
 
 ```http://localhost:8000```
+
+
+---
 
 
 ### Using .NET SDK
