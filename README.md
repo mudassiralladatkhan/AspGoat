@@ -37,7 +37,7 @@ It includes the **OWASP Top 10** and beyond, providing hands-on Application Secu
 
 ---
 
-## ✨ Features
+# ✨ Features
 
 - 🐞 Intentionally vulnerable ASP.NET Core MVC app  
 - 📚 Hands-on labs for:
