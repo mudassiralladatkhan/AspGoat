@@ -1,6 +1,8 @@
-<img src="wwwroot/AspGoatLogo.png" alt="AspGoat Logo" height="200" width="250"/>
+<p align="center">
+  <img src="wwwroot/img/aspgoat-logo.png" alt="AspGoat Logo" width="300"/>
+</p>
 
-# 🐐 AspGoat
+<h1 align="center">🐐 AspGoat</h1>
 
 <p align="center">
   <i>An intentionally vulnerable ASP.NET Core web application for learning and practicing Web Application Security.</i>
