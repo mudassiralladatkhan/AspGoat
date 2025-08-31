@@ -110,3 +110,14 @@ Download and install the **.NET SDK 8.0 (LTS)** from:
 
 ```http://localhost:5073```
 
+
+---
+
+
+## 👥 Contributors
+
+Thanks goes to these wonderful people ✨
+
+<a href="https://github.com/Soham7-dev/AspGoat/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Soham7-dev/AspGoat" />
+</a>
