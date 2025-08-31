@@ -1,0 +1,97 @@
+@model List<string>
+@{
+    ViewData["Title"] = "Stored XSS Demo";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 Stored XSS Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Vulnerable Form</h2>
+            <form method="POST">
+                <label for="comment">Comment:</label>
+                <input type="text" name="comment" id="comment">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>Stored XSS.</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 25px">
+        <h6><strong>Comment Section:</strong></h6>
+        @foreach (var content in Model)
+        {
+            <div>
+                @Html.Raw(content)  
+            </div>
+        }
+    </div>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://owasp.org/www-community/attacks/xss/">OWASP - XSS</a>
+        </li>
+        <li>
+            <a href="https://portswigger.net/web-security/cross-site-scripting/stored">Portswigger - Stored XSS</a>
+        </li>
+        <li>
+            <a href="https://docs.veracode.com/r/stored-xss">Veracode - Stored XSS</a>
+        </li>
+    </ul>
+
+    <!-- First Modal -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <h3>🔍 Analyze the Code</h3>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)"> &lt;h2&gt;Vulnerable Form&lt;/h2&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)"> &lt;form method="POST"&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 3)"> &nbsp;&nbsp;&lt;label for="query"&gt;Comment:&lt;/label&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 4)"> &nbsp;&nbsp;&lt;input type="text" name="comment" id="comment"&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 5)"> &nbsp;&nbsp;&lt;button type="submit"&gt;Submit&lt;/button&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 6)"> &lt;/form&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 7)"> &lt;div&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 8)">@@foreach (var content in Model)</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 9)">&lt;h6&gt;&lt;strong&gt;Comment Section:&lt;/strong&gt;&lt;/h6&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 10)">{</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 11)"> &lt;h3&gt;@@Html.Raw(content)&lt;/h3&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 12)">}</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 13)"> &lt;/div&gt;</div>
+            <br />
+            <button onclick="closeCodePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Diff Modal -->
+    <div id="diffModal" class="diff-modal">
+        <div class="diff-content">
+            <h3>✅ Secure Version</h3>
+            <div class="diff-line removed">- &lt;h3&gt;@@Html.Raw(content)&lt;/h3&gt;</div>
+            <div class="diff-line added">+ // Encode the user input before rendering in Views</div>
+            <div class="diff-line added">+ &lt;h3&gt;@@Html.Encode(content)&lt;/h3&gt;</div>
+            <br />
+            <button onclick="closeDiffPopup()">Close</button>
+        </div>
+    </div>
+
+    <script src="~/js/sxss.js"></script>
+
+</body>
+</html>

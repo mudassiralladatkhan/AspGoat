@@ -1,0 +1,81 @@
+@{
+    ViewData["Title"] = "DOM XSS Demo";
+    var query = ViewData["Query"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 DOM XSS Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Vulnerable Url Fragment</h2>
+            <a href="#helloworld" class="btn btn-primary">Click Here</a>
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>DOM XSS.</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 25px">
+        <h3 id="output"></h3>
+    </div>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://owasp.org/www-community/attacks/DOM_Based_XSS">OWASP - DOM based XSS</a>
+        </li>
+        <li>
+            <a href="https://portswigger.net/web-security/cross-site-scripting/dom-based">Portswigger - DOM XSS</a>
+        </li>
+        <li>
+            <a href="https://learn.snyk.io/lesson/dom-based-xss/?ecosystem=javascript">SNYK - DOM XSS</a>
+        </li>
+    </ul>
+
+    <!-- First Modal -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <h3>🔍 Analyze the Code</h3>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)"> const userInput = decodeURIComponent(location.hash.slice(1));</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)"> document.getElementById("output").innerHTML = userInput;</div>
+            <br />
+            <button onclick="closeCodePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Diff Modal -->
+    <div id="diffModal" class="diff-modal">
+        <div class="diff-content">
+            <h3>✅ Secure Version</h3>
+            <div class="diff-line removed">- document.getElementById("output").innerHTML = userInput;</div>
+            <div class="diff-line added">+ document.getElementById("output").innerText = userInput; // Output text instead of HTML</div>
+            <br />
+            <button onclick="closeDiffPopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        // Vulnerable sink
+        const userInput = decodeURIComponent(location.hash.slice(1)); 
+        document.getElementById("output").innerHTML = userInput;
+    </script>
+
+    <script src="~/js/domxss.js"></script>
+
+</body>
+</html>

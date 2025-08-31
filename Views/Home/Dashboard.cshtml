@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "AspGoat - Home";
+}
+<style>
+    img.logo {
+            width: 200px;
+        }
+</style>
+<div class="text-center">
+    <h1 class="display-4"><img src="/AspGoatLogo.png" class="logo"> Welcome to AspGoat</h1>
+    <p class="lead">An intentionally vulnerable ASP.NET Core app for learning web security.</p>
+
+    <hr style="margin: 30px auto; width: 60%;" />
+
+    <div style="max-width: 700px; margin: auto; font-size: 1.05rem;">
+        <p><strong>Purpose:</strong> Practice finding and fixing common web vulnerabilities in a safe environment.</p>
+
+        <p><strong>Includes:</strong></p>
+        <ul class="text-start" style="margin-left: 20px; font-size: 12px">
+            <li>SQL Injection</li>
+            <li>Cross-Site Scripting (XSS)</li>
+            <li>Local File Inclusion (LFI)</li>
+            <li>Remote Code Execution (RCE)</li>
+        </ul>
+
+        <p style="color: red;"><strong>Note:</strong> Do not deploy this app to production!</p>
+
+        <a href="/Home/SqlInjection" class="btn mt-3" style="background-color: #512bd4; color: white;">Start Exploring</a>
+    </div>
+</div>

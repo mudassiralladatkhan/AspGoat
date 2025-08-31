@@ -1,0 +1,90 @@
+@{
+    ViewData["Title"] = "Login";
+    Layout = null; 
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login - AspGoat</title>
+    <style>
+        body {
+            background-color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        img.logo {
+            width: 200px;
+            height: 200px;
+        }
+
+        form {
+            text-align: center;
+            width: 300px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        button {
+            padding: 8px 20px;
+            font-size: 16px;
+        }
+
+        .message {
+            color: #555;
+            margin-top: 10px;
+        }
+
+        .footer-link {
+            margin-top: 40px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <img src="/AspGoatLogo.png" class="logo" />
+
+    <form method="post" asp-controller="Account" asp-action="Login">
+        <div>
+            <label>Username</label><br />
+            <input type="text" name="username" value="admin" required />
+        </div>
+        <div>
+            <label>Password</label><br />
+            <input type="password" name="password" value="admin123" required />
+        </div>
+        <button type="submit">Login</button>
+
+        @if (ViewData["Error"] != null)
+        {
+            <div class="message">@ViewData["Error"]</div>
+        }
+
+        @if (Context.Request.Query["logout"] == "true")
+        {
+            <div class="message">You have logged out</div>
+        }
+    </form>
+
+    <div class="footer-link">
+        <a href="https://owasp.org/www-project-aspgoat/">AspGoat — An OWASP Project</a>
+    </div>
+
+</body>
+</html>

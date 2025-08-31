@@ -1,0 +1,102 @@
+@{
+    ViewData["Title"] = "LFI Demo";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 Local File Inclusion Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Can you download the source code of this Web Application (without using GitHub)?</h2>
+            <a asp-controller="Home" asp-action="Download" asp-route-file="AspGoatLogo.png" class="btn btn-primary">
+                Download
+            </a>
+
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>Local File Inclusion (LFI).</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/11.1-Testing_for_Local_File_Inclusion">OWASP - Local File Inclusion</a>
+        </li>
+        <li>
+            <a href="https://www.invicti.com/learn/local-file-inclusion-lfi/">Invicti - Local File Inclusion</a>
+        </li>
+        <li>
+            <a href="https://www.veracode.com/security/file-inclusion-vulnerabilities/">Veracode - Local and Remote File Inclusion</a>
+        </li>
+    </ul>
+
+    <!-- First Modal -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <h3>🔍 Analyze the Code</h3>
+
+            <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 1)">
+            1) var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", file);
+            </div>
+
+            <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)">
+            2) if (!System.IO.File.Exists(path)) { return NotFound("File not found"); }
+            </div>
+
+            <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 3)">
+            3) var contentType = "application/octet-stream";
+            </div>
+
+            <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 4)">
+            4) var fileBytes = System.IO.File.ReadAllBytes(path);
+            </div>
+
+            <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 5)">
+            5) return File(fileBytes, contentType, file);
+            </div>
+
+            <br />
+            <button onclick="closeCodePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Diff Modal (Minimal Secure Version) -->
+    <div id="diffModal" class="diff-modal">
+    <div class="diff-content">
+        <h3>✅ Secure Version</h3>
+
+        <div class="diff-line removed">- var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", file);</div>
+
+        <div class="diff-line added">+ // Strip the path traversal characters</div>
+        <div class="diff-line added">+ var fileName = Path.GetFileName(file);</div>
+        <div class="diff-line added">+ var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", fileName);</div>
+
+        <br />
+        <button onclick="closeDiffPopup()">Close</button>
+    </div>
+    </div>
+
+    <script src="~/js/lfi.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,10 @@
+[2025-08-03 14:22:18] GET /home 200 OK - IP: 192.168.1.10
+[2025-08-03 14:22:19] GET /about 200 OK - IP: 192.168.1.10
+[2025-08-03 14:22:21] POST /login 302 Redirect - IP: 192.168.1.10 - Payload: username=admin&password=SuperSecret123
+[2025-08-03 14:22:22] GET /dashboard 200 OK - IP: 192.168.1.10
+[2025-08-03 14:22:24] GET /profile 200 OK - IP: 192.168.1.10
+[2025-08-03 14:22:27] GET /logout 200 OK - IP: 192.168.1.10
+[2025-08-03 14:25:42] GET /search?q=account 200 OK - IP: 192.168.1.25
+[2025-08-03 14:26:10] GET /admin 403 Forbidden - IP: 192.168.1.15
+[2025-08-03 14:27:03] GET /api/users/5/details 200 OK - IP: 192.168.1.23
+[2025-08-03 14:29:14] GET /help 200 OK - IP: 192.168.1.18

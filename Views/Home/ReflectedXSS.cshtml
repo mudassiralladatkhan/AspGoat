@@ -1,0 +1,83 @@
+@{
+    ViewData["Title"] = "Reflected XSS Demo";
+    var query = ViewData["Query"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 Reflected XSS Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Vulnerable Form</h2>
+            <form method="GET">
+                <label for="query">Search:</label>
+                <input type="text" name="query" id="query">
+                <button type="submit">Submit</button>
+            </form>
+
+            <h3>Search results for '@Html.Raw(ViewData["Query"])'</h3>
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>Reflected XSS.</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://owasp.org/www-community/attacks/xss/">OWASP - XSS</a>
+        </li>
+        <li>
+            <a href="https://portswigger.net/web-security/cross-site-scripting/reflected">Portswigger - Reflected XSS</a>
+        </li>
+        <li>
+            <a href="https://www.veracode.com/security/reflected-xss/">Veracode - Reflected XSS</a>
+        </li>
+    </ul>
+
+    <!-- First Modal -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <h3>🔍 Analyze the Code</h3>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)"> &lt;h2&gt;Search Page&lt;/h2&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)"> &lt;form method="GET"&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 3)"> &nbsp;&nbsp;&lt;label for="query"&gt;Search:&lt;/label&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 4)"> &nbsp;&nbsp;&lt;input type="text" name="query" id="query"&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 5)"> &nbsp;&nbsp;&lt;button type="submit"&gt;Submit&lt;/button&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 6)"> &lt;/form&gt;</div>
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" id="vulnCheckbox" onchange="checkVulnerability(this, 7)">&lt;h3&gt;Search results for '@@Html.Raw(ViewData["Query"])'&lt;/h3&gt;</div>
+            <br />
+            <button onclick="closeCodePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Diff Modal -->
+    <div id="diffModal" class="diff-modal">
+        <div class="diff-content">
+            <h3>✅ Secure Version</h3>
+            <div class="diff-line removed">- &lt;h3&gt;Search results for '@@Html.Raw(ViewData["Query"])'&lt;/h3&gt;</div>
+            <div class="diff-line added">+ // Encode the user input before rendering in Views</div>
+            <div class="diff-line added">+ &lt;h3&gt;Search results for '@@Html.Encode(ViewData["Query"])'&lt;/h3&gt;</div>
+            <br />
+            <button onclick="closeDiffPopup()">Close</button>
+        </div>
+    </div>
+
+    <script src="~/js/rxss.js"></script>
+
+</body>
+</html>

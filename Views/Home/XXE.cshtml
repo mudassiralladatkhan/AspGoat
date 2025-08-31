@@ -1,0 +1,113 @@
+@{
+    ViewData["Title"] = "XML External Entities Demo";
+    var xmlOutput = ViewData["ParsedXml"] as string;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 XML External Entities Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Vulnerable XML Parser</h2>
+            <form method="POST">
+                <label for="xmlInput">XML Input:</label><br>
+                <input type="hidden" name="xmlInput" value="&lt;?xml version=&quot;1.0&quot;?&gt;&lt;review&gt;&lt;user&gt;Soham, &lt;/user&gt;&lt;comment&gt;This product is amazing!&lt;/comment&gt;&lt;/review&gt;">
+                <button type="submit">Check Product</button>
+            </form>
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>XML External Entity (XXE) Injection.</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+     <div style="text-align: center; margin-top: 25px">
+        @if (!string.IsNullOrEmpty(xmlOutput))
+        {
+            <strong>Parsed Output:</strong>
+            <p>@xmlOutput</p>
+        }
+    </div>
+
+    <!-- Code Modal for XXE -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <h3>🔍 Analyze the Code</h3>
+
+            <div class="popup-line">
+                <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)">
+                <span>var xmlDoc = new XmlDocument</span>
+            </div>
+
+            <div class="popup-line">
+                <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)">
+                <span>{</span>
+            </div>
+
+            <div class="popup-line">
+                <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 3)">
+                <span>&nbsp;&nbsp;XmlResolver = new XmlUrlResolver()</span>
+            </div>
+
+            <div class="popup-line">
+                <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 4)">
+                <span>};</span>
+            </div>
+
+            <div class="popup-line">
+                <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 5)">
+                <span>xmlDoc.LoadXml(xmlInput);</span>
+            </div>
+
+            <div class="popup-line">
+                <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 6)">
+                <span>result = xmlDoc.InnerText;</span>
+            </div>
+
+            <br />
+            <button onclick="closeCodePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Diff Modal for XXE -->
+    <div id="diffModal" class="diff-modal">
+        <div class="diff-content">
+            <h3>✅ Secure Version</h3>
+
+            <div class="diff-line removed">-     XmlResolver = new XmlUrlResolver()  // Enables external DTD fetching</div>
+            <div class="diff-line added">+     XmlResolver = null  // Disables external DTD resolution explicitly</div>
+
+            <br />
+            <button onclick="closeDiffPopup()">Close</button>
+        </div>
+    </div>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://owasp.org/www-community/vulnerabilities/XML_External_Entity_(XXE)_Processing">OWASP - XXE Injection</a>
+        </li>
+        <li>
+            <a href="https://portswigger.net/web-security/xxe">Portswigger - XXE Injection</a>
+        </li>
+        <li>
+            <a href="https://www.invicti.com/learn/xml-external-entity-xxe/">Invicti - XXE Injection</a>
+        </li>
+    </ul>
+
+    <script src="~/js/xxe.js"></script>
+</body>
+</html>

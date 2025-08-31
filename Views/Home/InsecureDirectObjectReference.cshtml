@@ -1,0 +1,85 @@
+@model List<string>
+@{
+    ViewData["Title"] = "IDOR Demo";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 IDOR Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Can you get someone else's data?</h2>
+            <form method="POST">
+                <label for="UserId">Get My User Data:</label><br>
+                <input type="hidden" name="UserId" value="2">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>Insecure Direct Object Reference.</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">OWASP - IDOR</a>
+        </li>
+        <li>
+            <a href="https://portswigger.net/web-security/access-control/idor">Portswigger - IDOR</a>
+        </li>
+        <li>
+            <a href="https://www.veracode.com/security/java/cwe-639/">Veracode - IDOR</a>
+        </li>
+    </ul>
+
+    <!-- First Modal: Insecure Code -->
+    <div id="codeModal" class="modal">
+        <div class="modal-content">
+            <h3>🔍 Analyze the Insecure Code</h3>
+
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)">
+                <span>if (userData.ContainsKey(UserId))</span>
+            </div>
+
+            <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)">
+                <span>return Json(userData[UserId]);</span>
+            </div>
+
+            <br />
+            <button onclick="closeCodePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Second Modal: Secure Code -->
+    <div id="diffModal" class="diff-modal">
+        <div class="diff-content">
+            <h3>✅ Secure Version</h3>
+
+            <div class="diff-line removed">- if (userData.ContainsKey(UserId))</div>
+            <div class="diff-line removed">- return Json(userData[UserId]);</div>
+            
+            <div class="diff-line added">+ // Check if the logged in userId matches the userId in the payload</div>   
+            <div class="diff-line added">+ if (loggedInUserId == UserId && userData.ContainsKey(UserId))</div>
+            <div class="diff-line added">+ return Json(userData[UserId]);</div>
+            <button onclick="closeDiffPopup()">Close</button>
+        </div>
+    </div>
+
+    <script src="~/js/idor.js"></script>
+
+</body>

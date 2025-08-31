@@ -1,0 +1,115 @@
+@{
+    ViewData["Title"] = "Command Injection Demo";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 Command Injection Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Enter a domain name (www.example.com) for DNS Lookup</h2>
+            <form method="GET">
+                <label for="domain">Domain:</label>
+                <input type="text" name="domain" id="domain">
+                <button type="submit">Submit</button>
+            </form>
+
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>Remote Code Execution via Command Injection.</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 25px">
+        <h6>@ViewData["Output"]</h6>
+    </div>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://portswigger.net/web-security/os-command-injection">Portswigger - OS Command Injection</a>
+        </li>
+        <li>
+            <a href="https://owasp.org/www-community/attacks/Command_Injection">OWASP - Command Injection</a>
+        </li>
+        <li>
+            <a href="https://www.invicti.com/learn/os-command-injection/">Invicti - Command Injection</a>
+        </li>
+    </ul>
+
+    <!-- First Modal -->
+    <div id="codeModal" class="modal">
+    <div class="modal-content">
+        <h3>🔍 Analyze the Code</h3>
+
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)"> string shell, args;</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)"> if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 3)">&nbsp;&nbsp;{</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 4)">&nbsp;&nbsp;&nbsp;&nbsp;shell = "cmd.exe";</div>
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" id="vulnWin" onchange="checkVulnerability(this, 6)">
+        &nbsp;&nbsp;&nbsp;&nbsp;args = $"/c nslookup &#123;domain&#125;";    
+        </div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 7)">&nbsp;&nbsp;}</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 8)"> else</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 9)">&nbsp;&nbsp;{</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 10)">&nbsp;&nbsp;&nbsp;&nbsp;shell = "/bin/bash";</div>
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" id="vulnLin" onchange="checkVulnerability(this, 12)">
+        &nbsp;&nbsp;&nbsp;&nbsp;args = $"-c &quot;nslookup &#123;domain&#125;&quot;";
+        </div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 13)">&nbsp;&nbsp;}</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 14)"> </div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 15)"> var process = new Process();</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 16)"> process.StartInfo.FileName = shell;</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 17)"> process.StartInfo.Arguments = args;</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 18)"> process.StartInfo.RedirectStandardOutput = true;</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 19)"> process.StartInfo.RedirectStandardError = true;</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 20)"> process.StartInfo.UseShellExecute = false;</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 21)"> process.StartInfo.CreateNoWindow = true;</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 22)"> </div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 23)"> process.Start();</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 24)"> string output = process.StandardOutput.ReadToEnd();</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 25)"> string error = process.StandardError.ReadToEnd();</div>
+        <div class="popup-line"><input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 26)"> process.WaitForExit();</div>
+
+        <br />
+        <button onclick="closeCodePopup()">Close</button>
+    </div>
+    </div>
+
+    <!-- Diff Modal -->
+    <div id="diffModal" class="diff-modal">
+    <div class="diff-content">
+        <h3>✅ Secure Version (.NET DNS API only)</h3>
+
+        <div class="diff-line removed">- args = $"/c nslookup &#123;domain&#125;";</div>
+        <div class="diff-line removed">- args = $"-c &quot;nslookup &#123;domain&#125;&quot;";</div>
+
+        <div class="diff-line added">+ // Use .NET DNS API instead of shell command</div>
+        <div class="diff-line added">+ var addresses = System.Net.Dns.GetHostAddresses(domain);</div>
+        <div class="diff-line added">+ var result = string.Join(Environment.NewLine, addresses.Select(a =&gt; a.ToString()));</div>
+        <div class="diff-line added">+ return Content(result, "text/plain");</div>
+
+        <br />
+        <button onclick="closeDiffPopup()">Close</button>
+    </div>
+    </div>
+
+    <script src="~/js/commin.js"></script>
+</body>
+</html>

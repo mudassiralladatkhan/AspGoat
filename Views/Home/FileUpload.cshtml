@@ -1,0 +1,119 @@
+@{
+    ViewData["Title"] = "FileUpload Demo";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 Malicious File Upload Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Can you Deface the Home Page of this Website with a cool hacker message 😈?</h2>
+            <form asp-action="FileUpload" method="post" enctype="multipart/form-data" class="mb-3">
+                <input type="file" name="file" class="form-control" />
+                <button class="btn btn-primary">Upload</button>
+            </form>
+
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>File Overwrite.</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+    <h5 style="text-align: center; margin: 40px; color: red">Warning: You may break the application while trying to deface the website. Click the Reset button to restore the app.</h5>
+
+    <div style="text-align:center;">
+        <button class="btn btn-success">Reset</button>
+    </div>
+
+    <h6 style="text-align: center; margin: 40px;">Note: The Reset feature is currently under development. If you have messed up the application while completing this challenge, please clone the app again from Github. Once defaced, you can copy the original content again from the Github repo. If you are using docker, stop and remove the container and start it again.</h6>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://portswigger.net/web-security/file-upload">Portswigger - File Uplodad Vulnerabilities</a>
+        </li>
+        <li>
+            <a href="https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload">OWASP - Unrestricted File Upload</a>
+        </li>
+        <li>
+            <a href="https://www.acunetix.com/vulnerabilities/web/unrestricted-file-upload/">Acunetix - Unrestricted File Upload</a>
+        </li>
+    </ul>
+    <!-- First Modal -->
+    <div id="codeModal" class="modal">
+    <div class="modal-content">
+        <h3>🔍 Analyze the Code</h3>
+
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)">
+        if (file == null || file.Length == 0) return Content("No file selected.");
+        </div>
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)">
+        var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+        </div>
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 3)">
+        Directory.CreateDirectory(uploads);
+        </div>
+        <div class="popup-line">
+        <input id="vulnCheckbox" type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 4)">
+        var filePath = Path.Combine(uploads, file.FileName); <!-- vulnerable -->
+        </div>
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 5)">
+        using (var stream = new FileStream(filePath, FileMode.Create))
+        </div>
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 6)">
+        { await file.CopyToAsync(stream); }
+        </div>
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 7)">
+        return Content($"File {file.FileName} uploaded successfully to /uploads.");
+        </div>
+
+        <br />
+        <button onclick="closeCodePopup()">Close</button>
+    </div>
+    </div>
+
+    <!-- Diff Modal -->
+    <div id="diffModal" class="diff-modal">
+    <div class="diff-content">
+        <h3>✅ Secure Version</h3>
+
+        <!-- removed (bad) -->
+        <div class="diff-line removed">- var filePath = Path.Combine(uploads, file.FileName);</div>
+
+        <!-- added (good) -->
+        <div class="diff-line added">+ // Strip the path traversal characters</div>
+        <div class="diff-line added">+ var filePath = Path.Combine(uploads, Path.GetFileName(file.FileName));</div>
+        <div class="diff-line added">+ // Allow a whitelist of file extensions</div>
+        <div class="diff-line added">+ var ext = Path.GetExtension(Path.GetFileName(file.FileName));</div>
+        <div class="diff-line added">+ var allowed = new[] { ".png", ".jpg", ".jpeg", ".gif", ".pdf" };</div>
+        <div class="diff-line added">+ if (!allowed.Contains(ext, StringComparer.OrdinalIgnoreCase))</div>
+        <div class="diff-line added">+ &nbsp;&nbsp;return BadRequest("Invalid file type.");</div>
+        <br />
+        <button onclick="closeDiffPopup()">Close</button>
+    </div>
+    </div>
+
+    <script src="~/js/fileupload.js"></script>
+
+</body>
+</html>

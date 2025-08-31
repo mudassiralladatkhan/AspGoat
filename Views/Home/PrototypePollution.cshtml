@@ -1,0 +1,156 @@
+@model List<string>
+@{
+    ViewData["Title"] = "Prototype Pollution Demo";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+    <style>
+        :root { --bg: #fff; --fg: #111; }
+        [data-theme="dark"] { --bg: #111; --fg: #eee; }
+        body { background: var(--bg); color: var(--fg); }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align: center; margin-bottom: 40px;">🧪 Prototype Pollution Demo</h1>
+
+    <div class="container">
+        <!-- Vulnerable Functionality -->
+        <div class="box">
+            <h2>Can you perform a DOM XSS by polluting the Object Prototype?</h2>
+            <button class="btn btn-outline-dark mt-3" onclick="toggleTheme()">Toggle Theme</button>
+        </div>
+
+        <!-- Secure Coding Challenge -->
+        <div class="box">
+            <h2>🔐 Secure the Code</h2>
+            <p>This page is vulnerable to <strong>Prototype Pollution.</strong></p>
+            <p>Your task is to find the line that causes this and fix it.</p>
+            <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin: 25px;">
+        <h4 id="app">loading…</h4>
+    </div>
+
+    <h6 style="margin: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://cheatsheetseries.owasp.org/cheatsheets/Prototype_Pollution_Prevention_Cheat_Sheet.html">OWASP - Prototype Pollution</a>
+        </li>
+        <li>
+            <a href="https://portswigger.net/web-security/prototype-pollution">Portswigger - Prototype Pollution</a>
+        </li>
+        <li>
+            <a href="https://learn.snyk.io/lesson/prototype-pollution/?ecosystem=javascript">SNYK - Prototype Pollution</a>
+        </li>
+    </ul>
+
+    <!-- Prototype Pollution – Code Modal -->
+    <div id="codeModal" class="modal">
+    <div class="modal-content">
+        <h3>🔍 Analyze the Code</h3>
+
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)">
+        <span>const config = { ...defaults };</span>
+        </div>
+
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)">
+        <span>for (const [k, v] of Object.entries(params)) setByPath(config, k, v);</span>
+        </div>
+
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 3)">
+        <span>document.documentElement.setAttribute("data-theme", config.theme);</span>
+        </div>
+
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 4)">
+        <span>const data = {};</span>
+        </div>
+
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 5)">
+        <span>const name = (data.name ?? config.ui.fallbackName);</span>
+        </div>
+
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 6)">
+        <span>document.getElementById('app').innerHTML = `Hello ${name}`;</span>
+        </div>
+
+        <div class="popup-line">
+        <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 7)">
+        <span>function toggleTheme() { /* updates ?theme= in URL */ }</span>
+        </div>
+
+        <br />
+        <button onclick="closeCodePopup()">Close</button>
+    </div>
+    </div>
+
+    <!-- Prototype Pollution – Secure Diff Modal -->
+    <div id="diffModal" class="diff-modal">
+    <div class="diff-content">
+        <h3>✅ Secure Version</h3>
+
+        <!-- Null-prototype object for sinks -->
+        <div class="diff-line removed">- const data = {};</div>
+        <div class="diff-line added">+ // Create an object that does not inherit properties from Object.prototype</div>
+        <div class="diff-line added">+ const data = Object.create(null);</div>
+
+        <!-- Avoid HTML injection in greeting -->
+        <div class="diff-line removed">- document.getElementById('app').innerHTML = `Hello ${name}`;</div>
+        <div class="diff-line added">+ // Output text instead of HTML to prevent XSS</div>       
+        <div class="diff-line added">+ document.getElementById('app').innerText = `Hello ${name}`;</div>
+
+        <br />
+        <button onclick="closeDiffPopup()">Close</button>
+    </div>
+    </div>
+
+    <script>
+        const defaults = { theme: "light", ui: { fallbackName: "Soham" } };
+        const params = Object.fromEntries(new URLSearchParams(location.search));
+
+        // vulnerable function that allows arbitrary properties 
+        function setByPath(obj, path, value) {
+            const keys = path.split('.');
+            let cur = obj;
+            for (let i = 0; i < keys.length - 1; i++) {
+                const k = keys[i];
+                if (cur[k] == null || typeof cur[k] !== 'object') cur[k] = {};
+                cur = cur[k];
+            }
+            cur[keys[keys.length - 1]] = value; 
+        }
+
+        // merge user params into config
+        const config = { ...defaults };
+        for (const [k, v] of Object.entries(params)) setByPath(config, k, v);
+
+        document.documentElement.setAttribute("data-theme", config.theme);
+
+        // vulnerable sink
+        const data = {}; 
+        const name = (data.name ?? config.ui.fallbackName);
+        document.getElementById('app').innerHTML = `Hello ${name}`;
+
+        function toggleTheme() {
+            const url = new URL(window.location);
+            url.searchParams.set('theme', config.theme === 'dark' ? 'light' : 'dark');
+            window.location = url.toString();
+        }
+    </script>
+
+    <script src="~/js/protopol.js"></script>
+</body>
+</html>

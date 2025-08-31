@@ -1,0 +1,53 @@
+# ===== .NET build artifacts =====
+bin/
+obj/
+*.pdb
+*.dll
+*.exe
+
+# ===== Visual Studio / IDE =====
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# ===== Rider / JetBrains =====
+*.iml
+*.ipr
+*.iws
+out/
+
+# ===== OS-generated =====
+.DS_Store
+Thumbs.db
+
+# ===== Node / Frontend =====
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ===== Client libraries (restored via libman/npm) =====
+wwwroot/lib/
+
+# ===== Database (don’t commit local SQLite DBs) =====
+app.db
+*.sqlite*
+*.db-shm
+*.db-wal
+
+# ===== Config / Secrets =====
+.env
+*.env
+appsettings.Development.json
+
+# ===== Docker =====
+*.pid
+docker-compose.override.yml
+
+# ===== Coverage / test =====
+*.coverage
+*.coveragexml
+TestResults/

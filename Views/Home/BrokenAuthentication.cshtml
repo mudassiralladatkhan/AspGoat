@@ -1,0 +1,135 @@
+@{
+    ViewData["Title"] = "BrokenAuthentication";
+}
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/app.css" />
+</head>
+<h1 style="text-align: center; margin-bottom: 40px;">🧪 Broken Authentication Demo</h1>
+<h2>Login</h2>
+
+@if (ViewData["Error"] != null)
+{
+    <div class="alert alert-danger">@ViewData["Error"]</div>
+}
+@if (ViewData["LoginMessage"] != null)
+{
+    <div class="alert alert-success">@ViewData["LoginMessage"]</div>
+}
+
+<form method="post" class="mt-3">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" name="username" class="form-control" required />
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+
+<div class="card p-4 mt-4">
+    <h3>🔐 Secure the Code</h3>
+    <p>This login page is vulnerable to <strong>Username Enumeration</strong>.</p>
+    <p>Your task is to identify the inconsistent error messages and modify the logic to prevent user guessing.</p>
+    <button class="btn btn-outline-dark mt-2" onclick="openCodePopup()">🕵️ Identify Vulnerability</button>
+</div>
+
+<h6 style="margin-top: 25px;">More Information:</h6>
+    <ul>
+        <li>
+            <a href="https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/03-Identity_Management_Testing/04-Testing_for_Account_Enumeration_and_Guessable_User_Account">OWASP - Account Enumeration</a>
+        </li>
+        <li>
+            <a href="https://portswigger.net/web-security/authentication/password-based#username-enumeration">Portswigger - Username Enumeration</a>
+        </li>
+    </ul>
+
+<!-- Code Modal -->
+<div id="codeModal" class="modal">
+    <div class="modal-content">
+        <h3>🔍 Analyze the Code</h3>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 1)">
+            <span>if (username != "admin")</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 2)">
+            <span>&nbsp;&nbsp;// Username enumeration vulnerability</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 3)">
+            <span>&nbsp;&nbsp;ViewData["Error"] = "User does not exist.";</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 4)">
+            <span>&nbsp;&nbsp;return View();</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 5)">
+            <span>if (password != "admin")</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 6)">
+            <span>&nbsp;&nbsp;// Indicates username is valid</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 7)">
+            <span>&nbsp;&nbsp;ViewData["Error"] = "Incorrect password.";</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 8)">
+            <span>&nbsp;&nbsp;return View();</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 9)">
+            <span>ViewData["LoginMessage"] = $"Welcome, {username}!";</span>
+        </div>
+
+        <div class="popup-line">
+            <input type="checkbox" class="code-checkbox" onchange="checkVulnerability(this, 10)">
+            <span>return View();</span>
+        </div>
+
+        <br />
+        <button onclick="closeCodePopup()">Close</button>
+    </div>
+</div>
+
+<!-- Diff Modal -->
+<div id="diffModal" class="diff-modal">
+    <div class="diff-content">
+        <h3>✅ Secure Version</h3>
+
+        <div class="diff-line removed">- if (username != "admin")</div>
+        <div class="diff-line removed">- &nbsp;&nbsp;ViewData["Error"] = "User does not exist.";</div>
+        <div class="diff-line removed">- &nbsp;&nbsp;return View();</div>
+
+        <div class="diff-line removed">- if (password != "admin")</div>
+        <div class="diff-line removed">- &nbsp;&nbsp;ViewData["Error"] = "Incorrect password.";</div>
+        <div class="diff-line removed">- &nbsp;&nbsp;return View();</div>
+        
+        <div class="diff-line added">+ // Give a generic message so that attacker can't enumerate usernames</div>
+        <div class="diff-line added">+ if (username != "admin" || password != "admin")</div>
+        <div class="diff-line added">+ &nbsp;&nbsp;ViewData["Error"] = "Invalid username or password.";</div>
+        <div class="diff-line added">+ // Also implement captcha to protect against brute force attacks</div>
+        <div class="diff-line added">+ // Code for implementing captcha..</div>
+        <div class="diff-line added">+ &nbsp;&nbsp;return View();</div>
+
+        <br />
+        <button onclick="closeDiffPopup()">Close</button>
+    </div>
+</div>
+
+<script src="~/js/bauth.js"></script>
