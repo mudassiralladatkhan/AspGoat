@@ -59,7 +59,7 @@ It includes the **OWASP Top 10** and beyond, providing hands-on Application Secu
 
 ---
 
-## 🪛 Installation
+# 🪛 Installation
 
 ### Using Docker (recommended)
 
