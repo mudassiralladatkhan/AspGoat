@@ -1,3 +1,4 @@
 *.cshtml linguist-language=C#
-wwwroot/js/* linguist-vendored=false
 wwwroot/lib/** linguist-vendored=true
+wwwroot/js/** linguist-vendored=false
+wwwroot/js/** linguist-generated=false
