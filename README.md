@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="wwwroot/img/aspgoat-logo.png" alt="AspGoat Logo" width="300"/>
+  <img src="wwwroot/AspGoatLogo.png" alt="AspGoat Logo" width="300"/>
 </p>
 
 <h1 align="center">🐐 AspGoat</h1>
