@@ -63,21 +63,21 @@ It includes the **OWASP Top 10** and beyond, providing hands-on Application Secu
 
 ### Using Docker (recommended)
 
-# Clone the repository
+### Clone the repository
 
 ```git clone https://github.com/Soham7-dev/AspGoat.git```
 
 ```cd AspGoat```
 
-# Build the image
+### Build the image
 
 ```docker build -t aspgoat .```
 
-# Run the container
+### Run the container
 
 ```docker run --rm -p 8000:8000 aspgoat```
 
-# Access the app
+### Access the app
 
 ```http://localhost:8000```
 
@@ -89,21 +89,21 @@ Download and install the **.NET SDK 8.0 (LTS)** from:
 
 *(The SDK includes the runtime, so this is all you need to build and run AspGoat from source.)*
 
-# Clone the repository
+### Clone the repository
 
 ```git clone https://github.com/Soham7-dev/AspGoat.git```
 
 ```cd AspGoat```
 
-# Restore Dependencies
+### Restore Dependencies
 
 ```dotnet restore```
 
-# Run the app
+### Run the app
 
 ```dotnet run```
 
-# Access the app
+### Access the app
 
 ```http://localhost:5073```
 
