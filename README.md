@@ -41,19 +41,20 @@ It includes the **OWASP Top 10** and beyond, providing hands-on Application Secu
 
 - 🐞 Intentionally vulnerable ASP.NET Core MVC app  
 - 📚 Hands-on labs for:
-  - **Cross-Site Scripting (XSS)**
-  - **Cross-Site Request Forgery (CSRF)**
-  - **SQL Injection (SQLi)**
-  - **XML External Entity (XXE)**
-  - **Local File Inclusion (LFI)**
-  - **Remote Code Execution (RCE)**
-  - **Unrestricted File Upload**
-  - **Information Disclosure**
-  - **Broken Authentication**
-  - **Server-Side Request Forgery (SSRF)**
-  - **Insecure Direct Object Reference (IDOR)**
-  - **Insecure Deserialization**
-  - **Command Injection**
+  - 🐞 **Cross-Site Scripting (XSS)**
+  - 🐞 **Cross-Site Request Forgery (CSRF)**
+  - 🐞 **SQL Injection (SQLi)**
+  - 🐞 **XML External Entity (XXE)**
+  - 🐞 **Local File Inclusion (LFI)**
+  - 🐞 **Remote Code Execution (RCE)**
+  - 🐞 **Unrestricted File Upload**
+  - 🐞 **Information Disclosure**
+  - 🐞 **Broken Authentication**
+  - 🐞 **Server-Side Request Forgery (SSRF)**
+  - 🐞 **Insecure Direct Object Reference (IDOR)**
+  - 🐞 **Insecure Deserialization**
+  - 🐞 **Command Injection**
+  - 🐞 **Prototype Pollution**
   - 🛡️ **Secure vs Insecure coding snippets**  
   - 🐳 **Ready-to-run Docker setup**  
 
@@ -121,3 +122,9 @@ Thanks goes to these wonderful people ✨
 <a href="https://github.com/Soham7-dev/AspGoat/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=Soham7-dev/AspGoat" />
 </a>
+
+---
+
+## 📝 NOTE
+
+The default username for **AspGoat** is **admin** and the default password is **admin123**. The 🐞 **Unrestricted File Upload** Lab can break the application. A ***Hard Reset*** feature is currently under development which will reset the application (not yet released). As of now, if you break the application during explotation of the Lab, your only option is cloning the Project again and restart the application.
