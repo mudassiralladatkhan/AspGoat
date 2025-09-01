@@ -21,11 +21,10 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Run (Smoke Test)
+        working-directory: AspGoat
         run: |
-          # Run the app in background
           dotnet run --no-build --project AspGoat.csproj &
           APP_PID=$!
-          # Wait a few seconds to ensure startup
           sleep 10
-          # Kill the process so the job doesn't hang
           kill $APP_PID
+
