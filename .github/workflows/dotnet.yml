@@ -1,0 +1,31 @@
+# .github/workflows/dotnet.yml
+name: .NET Build & Run Check
+
+on: [pull_request, push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Run (Smoke Test)
+        run: |
+          # Run the app in background
+          dotnet run --no-build --project AspGoat.csproj &
+          APP_PID=$!
+          # Wait a few seconds to ensure startup
+          sleep 10
+          # Kill the process so the job doesn't hang
+          kill $APP_PID
